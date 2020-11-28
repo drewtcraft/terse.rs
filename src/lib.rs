@@ -1,5 +1,6 @@
 #![allow(dead_code)] // damn this is useful
 
+mod types;
 mod models;
 
 #[cfg(test)]
