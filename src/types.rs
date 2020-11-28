@@ -9,10 +9,15 @@ pub struct Rect {
 	height: f64,
 }
 
+// acts can have all kinds of data structures
+pub enum ActData {
+	Move(Point),
+}
 
 #[derive(Clone, Debug)]
 pub struct TimeRange(f64, f64); // start -> end
 
+// some useful aliases
 pub type Angle = f64;
 pub type Z = i16;
 pub type ImageIndex = u8;

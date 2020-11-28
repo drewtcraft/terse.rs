@@ -2,6 +2,7 @@
 
 mod types;
 mod models;
+mod serialize;
 
 #[cfg(test)]
 mod tests {

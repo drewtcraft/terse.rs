@@ -1,12 +1,8 @@
 use crate::types::*;
 use super::asset::Asset;
 
-pub enum ActType {
-	Move,
-}
-
 pub struct Act<'a> {
-	act_type: ActType,
+	act_data: ActData,
 	range: TimeRange,
 	assets: Vec<&'a Asset>,
 }
