@@ -7,6 +7,11 @@ pub struct Act<'a> {
 	assets: Vec<&'a Asset>,
 }
 
+// acts can have all kinds of data structures
+pub enum ActData {
+	Move(Point),
+}
+
 #[cfg(test)]
 mod tests {
 	#[test]

@@ -2,7 +2,7 @@
 
 mod types;
 mod models;
-mod serialize;
+mod cereal;
 
 #[cfg(test)]
 mod tests {

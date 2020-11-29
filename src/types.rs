@@ -9,9 +9,10 @@ pub struct Rect {
 	height: f64,
 }
 
-// acts can have all kinds of data structures
-pub enum ActData {
-	Move(Point),
+impl Rect {
+	fn new(width: f64, height: f64) -> Rect {
+		Rect { width, height }
+	}
 }
 
 #[derive(Clone, Debug)]
