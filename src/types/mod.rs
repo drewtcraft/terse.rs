@@ -1,19 +1,12 @@
+mod rect;
+mod algebraic;
+
+pub use self::rect::Rect;
+pub use self::algebraic::Algebraic;
 use arraystring::{ArrayString, typenum::U10};
 
 #[derive(Clone, Debug)]
-pub struct Point(f64, f64);
-
-#[derive(Clone, Debug)]
-pub struct Rect {
-	width: f64,
-	height: f64,
-}
-
-impl Rect {
-	fn new(width: f64, height: f64) -> Rect {
-		Rect { width, height }
-	}
-}
+pub struct Point(pub f64, pub f64);
 
 #[derive(Clone, Debug)]
 pub struct TimeRange(f64, f64); // start -> end

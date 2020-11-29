@@ -5,48 +5,60 @@ use super::act::Act;
 // we don't need to know anything about the episode
 // this is basically just a container for the style
 // interpolation functionality
-pub struct Episode<'a> {
-	acts: Vec<&'a Act<'a>>,
-	assets: Vec<&'a Asset>,
+pub struct Episode {
+	acts: Vec<Act>>,
+	assets: Vec<Asset>,
 }
 
 // require shit where we need it!
 use crate::cereal;
 use serde_json;
-impl<'a> Episode<'a> {
-	fn from_json (json: &str) -> Episode<'a> {
+impl Episode {
+	fn from_json (json: &str) -> Episode {
 		let parsed: cereal::Episode = serde_json::from_str(json)
-			.unwrap();
+			.expect("failed to parse JSON");
 
-		let assets = parsed.assets.map(|asset| {
-			Asset {
+		let assets: Vec<Asset> = Vec::new();
+		for asset in parsed.assets.iter() {
+			assets.push(Asset {
+				asset_key: asset.asset_key,
 				origin: Point(asset.x, asset.y),
 				size: Rect.new(asset.width, asset.height),
-				z: Z(asset.z),
-				angle: Angle(asset.angle),
-				image_index: ImageIndex(asset.image_index),
-			}
-		});
-
-		let asset_iter = assets.iter();
-
-		let acts = parsed.acts.map(|act| {
-			let my_assets = assets.filter(|asset| {
-				
+				z: asset.z,
+				angle: asset.angle,
+				image_index: 0,
 			});
+		}
 
-			let t = act.r#type;
-			let act_data = match t {
-				"move" => ActData::Move(Point()),
-				_ => panic!("unknown act type {}", t),
+		let assets_iter = assets.iter();
+
+		let acts: Vec<Act> = Vec::new();
+		for act in parsed.acts.iter() {
+			let my_assets: Vec<&Asset> = Vec::new();
+			for asset in assets_iter {
+				if act.asset_keys.contains(&asset.asset_key) {
+					my_assets.push(asset);
+				}
+			}
+
+			let act_data = match act.r#type.as_str() {
+				"move" => {
+					ActData::Move(
+						Point(
+							act.data["x"].as_f64().unwrap(), 
+							act.data["y"].as_f64().unwrap(),
+						)
+					)
+				}
+				_ => panic!("unknown act type {}", act.r#type),
 			};
 
-			Act {
+			acts.push(Act {
 				assets: my_assets,
 				range: TimeRange(act.start, act.end),
 				act_data,
-			}
-		});
+			});
+		}
 
 		Episode {
 			assets,

@@ -15,10 +15,11 @@ pub struct Asset {
 #[derive(Deserialize)]
 pub struct Act {
 	pub act_key: String,
+	pub asset_keys: Vec<String>,
 	pub start: f64,
 	pub end: f64,
 	pub r#type: String,
-	pub data: Value, // unstructured data
+	pub data: Value, // unstructured data, varies by type
 }
 
 #[derive(Deserialize)]
